@@ -4,16 +4,16 @@ A personal-use web app for creating fun videos by overlaying faces on templates
 Optimized for mobile (iPhone) use
 """
 
-from flask import Flask, render_template, request, jsonify, send_file, url_for
-from werkzeug.utils import secure_filename
-import cv2
-import mediapipe as mp
-import numpy as np
 import os
 import subprocess
 import uuid
 from datetime import datetime
 from pathlib import Path
+
+import cv2
+import mediapipe as mp
+from flask import Flask, jsonify, render_template, request, send_file, url_for
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
