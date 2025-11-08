@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Face Swap Fun! 🎭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            color: #333;
+        }
+
+        /* Photo Upload */
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f1ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8e9ff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .photo-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Template Selection */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .template-item {
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            background: #f8f9ff;
+        }
+
+        .template-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .template-item.selected {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .template-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .template-name {
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .template-item.selected .template-name {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #48bb78;
+            margin-top: 15px;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #48bb78;
+        }
+
+        .status-error {
+            background: #fed7d7;
+            color: #742a2a;
+            border-left: 4px solid #f56565;
+        }
+
+        .status-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 4px solid #4299e1;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Video Result */
+        .video-result {
+            display: none;
+        }
+
+        .video-result video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            padding: 12px;
+            font-size: 1em;
+            background: #667eea;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .templates-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .template-item video {
+                height: 120px;
+            }
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .upload-area {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            button {
+                -webkit-appearance: none;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 Face Swap Fun!</h1>
+        <p class="subtitle">Create hilarious videos in seconds</p>
+
+        <!-- Step 1: Upload Photo -->
+        <div class="card">
+            <h2><span class="step-number">1</span> Upload Your Photo</h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📸</div>
+                <p style="font-size: 1.1em; margin-bottom: 5px;">Tap to take or upload a photo</p>
+                <p style="color: #666; font-size: 0.9em;">Works best with clear, frontal faces</p>
+                <input type="file" id="photoInput" accept="image/*" capture="user">
+            </div>
+            <div class="photo-preview" id="photoPreview">
+                <img id="previewImage" src="" alt="Preview">
+            </div>
+            <div class="status-message" id="uploadStatus"></div>
+            <div class="spinner" id="uploadSpinner"></div>
+        </div>
+
+        <!-- Step 2: Select Template -->
+        <div class="card">
+            <h2><span class="step-number">2</span> Choose a Template</h2>
+            {% if templates %}
+            <div class="templates-grid" id="templatesGrid">
+                {% for template in templates %}
+                <div class="template-item" data-template="{{ template.id }}">
+                    <video muted loop playsinline>
+                        <source src="{{ template.url }}" type="video/mp4">
+                    </video>
+                    <div class="template-name">{{ template.name }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🎬</div>
+                <p>No templates available yet.</p>
+                <p style="font-size: 0.9em; margin-top: 10px;">Add .mp4 files to the static/template_videos folder</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Step 3: Generate -->
+        <div class="card">
+            <h2><span class="step-number">3</span> Create Your Video</h2>
+            <button class="btn-primary" id="generateBtn" disabled>
+                Generate Video
+            </button>
+            <div class="status-message" id="generateStatus"></div>
+            <div class="spinner" id="generateSpinner"></div>
+        </div>
+
+        <!-- Step 4: Result -->
+        <div class="card video-result" id="resultCard">
+            <h2>🎉 Your Video is Ready!</h2>
+            <video id="resultVideo" controls playsinline>
+                <source id="resultSource" type="video/mp4">
+            </video>
+            <div class="share-buttons">
+                <a id="downloadBtn" class="btn-secondary share-btn" download style="text-align: center; line-height: 1.2; text-decoration: none;">
+                    ⬇️ Download
+                </a>
+                <button class="share-btn" id="shareBtn">
+                    📤 Share
+                </button>
+            </div>
+            <button class="btn-primary" style="margin-top: 15px;" id="newVideoBtn">
+                Create Another Video
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let uploadedFilename = null;
+        let selectedTemplate = null;
+
+        // Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImage = document.getElementById('previewImage');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const uploadSpinner = document.getElementById('uploadSpinner');
+
+        const templatesGrid = document.getElementById('templatesGrid');
+        const templateItems = document.querySelectorAll('.template-item');
+
+        const generateBtn = document.getElementById('generateBtn');
+        const generateStatus = document.getElementById('generateStatus');
+        const generateSpinner = document.getElementById('generateSpinner');
+
+        const resultCard = document.getElementById('resultCard');
+        const resultVideo = document.getElementById('resultVideo');
+        const resultSource = document.getElementById('resultSource');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const newVideoBtn = document.getElementById('newVideoBtn');
+
+        // Upload Area Click
+        uploadArea.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        // Drag and Drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                photoInput.files = e.dataTransfer.files;
+                handlePhotoUpload();
+            }
+        });
+
+        // Photo Input Change
+        photoInput.addEventListener('change', handlePhotoUpload);
+
+        async function handlePhotoUpload() {
+            const file = photoInput.files[0];
+            if (!file) return;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                photoPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+
+            // Upload to server
+            showStatus(uploadStatus, 'info', 'Detecting face...');
+            uploadSpinner.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('photo', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    uploadedFilename = data.filename;
+                    showStatus(uploadStatus, 'success', '✓ ' + data.message);
+                    checkReadyToGenerate();
+                } else {
+                    showStatus(uploadStatus, 'error', '✗ ' + data.error);
+                    uploadedFilename = null;
+                    photoPreview.style.display = 'none';
+                }
+            } catch (error) {
+                showStatus(uploadStatus, 'error', '✗ Upload failed: ' + error.message);
+                uploadedFilename = null;
+                photoPreview.style.display = 'none';
+            } finally {
+                uploadSpinner.style.display = 'none';
+            }
+        }
+
+        // Template Selection
+        templateItems.forEach(item => {
+            const video = item.querySelector('video');
+
+            // Play on hover/touch
+            item.addEventListener('mouseenter', () => video.play());
+            item.addEventListener('mouseleave', () => video.pause());
+            item.addEventListener('touchstart', () => video.play());
+
+            // Select template
+            item.addEventListener('click', () => {
+                templateItems.forEach(t => t.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedTemplate = item.dataset.template;
+                checkReadyToGenerate();
+            });
+        });
+
+        // Check if ready to generate
+        function checkReadyToGenerate() {
+            if (uploadedFilename && selectedTemplate) {
+                generateBtn.disabled = false;
+            } else {
+                generateBtn.disabled = true;
+            }
+        }
+
+        // Generate Video
+        generateBtn.addEventListener('click', async () => {
+            generateBtn.disabled = true;
+            showStatus(generateStatus, 'info', 'Creating your video... This may take 10-30 seconds.');
+            generateSpinner.style.display = 'block';
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        filename: uploadedFilename,
+                        template: selectedTemplate
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showStatus(generateStatus, 'success', '✓ Video created successfully!');
+
+                    // Show result
+                    resultSource.src = data.video_url;
+                    resultVideo.load();
+                    downloadBtn.href = data.download_url;
+                    resultCard.style.display = 'block';
+
+                    // Scroll to result
+                    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    // Auto-play on mobile
+                    setTimeout(() => {
+                        resultVideo.play().catch(() => {
+                            // Autoplay might be blocked, that's ok
+                        });
+                    }, 500);
+                } else {
+                    showStatus(generateStatus, 'error', '✗ ' + data.error);
+                    generateBtn.disabled = false;
+                }
+            } catch (error) {
+                showStatus(generateStatus, 'error', '✗ Failed to create video: ' + error.message);
+                generateBtn.disabled = false;
+            } finally {
+                generateSpinner.style.display = 'none';
+            }
+        });
+
+        // Share Button (uses Web Share API on mobile)
+        shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    const videoUrl = resultSource.src;
+                    const response = await fetch(videoUrl);
+                    const blob = await response.blob();
+                    const file = new File([blob], 'face_swap_video.mp4', { type: 'video/mp4' });
+
+                    await navigator.share({
+                        title: 'Check out my face swap video!',
+                        text: 'Made with Face Swap Fun',
+                        files: [file]
+                    });
+                } catch (error) {
+                    // Fallback: just share the URL
+                    if (error.name !== 'AbortError') {
+                        alert('Sharing not available. Use the download button instead.');
+                    }
+                }
+            } else {
+                alert('Sharing not supported on this device. Use the download button!');
+            }
+        });
+
+        // New Video Button
+        newVideoBtn.addEventListener('click', () => {
+            resultCard.style.display = 'none';
+            generateStatus.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Helper: Show Status Message
+        function showStatus(element, type, message) {
+            element.className = 'status-message status-' + type;
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        // Auto-play template videos when in viewport (mobile optimization)
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target.querySelector('video');
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            templateItems.forEach(item => observer.observe(item));
+        }
+    </script>
+</body>
+</html>

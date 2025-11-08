@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Uploads and output (user generated content)
+static/uploads/*
+static/output/*
+temp/*
+
+# Keep directory structure
+!static/uploads/.gitkeep
+!static/output/.gitkeep
+!temp/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
