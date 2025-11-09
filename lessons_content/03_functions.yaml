@@ -1,0 +1,45 @@
+id: "03_functions"
+title: "Functions - Reusable Code"
+description: "Learn how to create and use functions to organize your code"
+objectives:
+  - "Understand what functions are and why they're useful"
+  - "Learn how to define functions with def"
+  - "Use parameters and return values"
+starter_code: |
+  # Functions let you reuse code
+  # Define a function using 'def'
+
+  def greet(name):
+      return "Hello, " + name + "!"
+
+  # Call the function
+  message = greet("World")
+  print(message)
+
+hints:
+  - "Use 'def' to define a function"
+  - "Function names should be descriptive"
+  - "Use 'return' to send a value back from the function"
+  - "Don't forget the colon : after the function definition"
+exercises:
+  - id: "ex1"
+    description: "Create a function called 'add_numbers' that takes two numbers and returns their sum"
+    test_code: |
+      # Test the function
+      if 'add_numbers' in dir():
+          try:
+              result = add_numbers(5, 3)
+              if result == 8:
+                  print("✓ Great! Your function works correctly!")
+              else:
+                  print(f"✗ Expected 8, but got {result}")
+          except Exception as e:
+              print(f"✗ Error calling function: {e}")
+      else:
+          print("✗ Please create a function called add_numbers")
+    solution_example: |
+      def add_numbers(a, b):
+          return a + b
+
+      # Test it
+      print(add_numbers(5, 3))  # Should print 8

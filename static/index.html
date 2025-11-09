@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Tutor IDE - Learn Python</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🐍 Coding Tutor IDE</h1>
+            <p>Learn Python with AI-powered guidance</p>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar - Lessons -->
+            <aside class="sidebar">
+                <h2>Lessons</h2>
+                <div id="lessons-list" class="lessons-list">
+                    <p>Loading lessons...</p>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Lesson Info -->
+                <div id="lesson-info" class="lesson-info">
+                    <h2 id="lesson-title">Select a lesson to begin</h2>
+                    <p id="lesson-description"></p>
+                    <div id="lesson-objectives"></div>
+                    <div id="lesson-exercises"></div>
+                </div>
+
+                <!-- Code Editor -->
+                <div class="editor-section">
+                    <div class="editor-header">
+                        <h3>Python Editor</h3>
+                        <div class="editor-actions">
+                            <button id="run-btn" class="btn btn-primary">▶ Run Code</button>
+                            <button id="review-btn" class="btn btn-secondary">🤖 Get AI Review</button>
+                        </div>
+                    </div>
+                    <textarea id="code-editor" placeholder="# Write your Python code here..."></textarea>
+                </div>
+
+                <!-- Output and AI Assistant -->
+                <div class="output-section">
+                    <div class="output-panel">
+                        <h3>Output</h3>
+                        <pre id="output-content" class="output-content">Run your code to see output here...</pre>
+                    </div>
+                    <div class="ai-panel">
+                        <h3>AI Assistant</h3>
+                        <div id="ai-content" class="ai-content">
+                            <p>Write some code and click "Get AI Review" for feedback!</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

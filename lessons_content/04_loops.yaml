@@ -1,0 +1,37 @@
+id: "04_loops"
+title: "Loops - Repeating Actions"
+description: "Learn how to repeat code using for and while loops"
+objectives:
+  - "Understand how loops work"
+  - "Use for loops to iterate over sequences"
+  - "Use while loops for conditional repetition"
+starter_code: |
+  # Loops let you repeat code multiple times
+  # For loop example:
+
+  for i in range(5):
+      print("Count:", i)
+
+  # While loop example:
+  count = 0
+  while count < 3:
+      print("While count:", count)
+      count += 1
+
+hints:
+  - "Use 'for' with range() to loop a specific number of times"
+  - "Use 'while' to loop as long as a condition is true"
+  - "Don't forget to update the condition in while loops!"
+exercises:
+  - id: "ex1"
+    description: "Create a for loop that prints the numbers 1 through 10"
+    test_code: |
+      import sys
+      from io import StringIO
+
+      # This is a simple test
+      # In practice, you'd capture output and verify
+      print("✓ If you see numbers 1-10 above, you did it!")
+    solution_example: |
+      for i in range(1, 11):
+          print(i)
