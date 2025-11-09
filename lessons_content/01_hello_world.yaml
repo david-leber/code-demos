@@ -1,0 +1,36 @@
+id: "01_hello_world"
+title: "Hello, World!"
+description: "Your first Python program - learn how to print output to the console"
+objectives:
+  - "Understand how to use the print() function"
+  - "Write your first Python program"
+  - "Learn about strings in Python"
+starter_code: |
+  # Welcome to your first Python lesson!
+  # Use the print() function to display "Hello, World!"
+
+hints:
+  - "Use the print() function"
+  - "Put your text in quotes: print('your text here')"
+  - "Try running the code with the Run button"
+exercises:
+  - id: "ex1"
+    description: "Write a program that prints 'Hello, World!' to the console"
+    test_code: |
+      import sys
+      from io import StringIO
+
+      # Capture output
+      old_stdout = sys.stdout
+      sys.stdout = buffer = StringIO()
+
+      # This is a simple check - in practice you'd want more robust testing
+      output = buffer.getvalue()
+      sys.stdout = old_stdout
+
+      if "Hello, World!" in output or "hello, world!" in output.lower():
+          print("✓ Test passed! Great job!")
+      else:
+          print("✗ Test failed. Make sure your output contains 'Hello, World!'")
+    solution_example: |
+      print("Hello, World!")

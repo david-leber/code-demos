@@ -1,0 +1,36 @@
+id: "02_variables"
+title: "Variables and Data Types"
+description: "Learn how to store and use data with variables"
+objectives:
+  - "Understand what variables are"
+  - "Learn how to assign values to variables"
+  - "Work with different data types (strings, numbers)"
+starter_code: |
+  # Variables let you store values and reuse them
+  # Try creating variables for your name and age
+
+  name = "Your Name"
+  age = 0
+
+  print("My name is", name)
+  print("I am", age, "years old")
+
+hints:
+  - "Use = to assign values to variables"
+  - "Variables can store text (strings) or numbers"
+  - "You can use variables in print() statements"
+exercises:
+  - id: "ex1"
+    description: "Create a variable called 'favorite_language' and set it to 'Python', then print it"
+    test_code: |
+      # Check if the variable exists and has the right value
+      if 'favorite_language' in dir():
+          if favorite_language == "Python":
+              print("✓ Correct! Python is awesome!")
+          else:
+              print("✗ Make sure favorite_language is set to 'Python'")
+      else:
+          print("✗ Please create a variable called favorite_language")
+    solution_example: |
+      favorite_language = "Python"
+      print("My favorite language is", favorite_language)
