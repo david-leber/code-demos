@@ -5,6 +5,31 @@ objectives:
   - "Understand what variables are"
   - "Learn how to assign values to variables"
   - "Work with different data types (strings, numbers)"
+
+concepts:
+  - "Variables are containers that store values"
+  - "Use the = operator to assign values to variables"
+  - "Variable names should be descriptive"
+  - "Python has different data types: strings (text), integers (whole numbers), floats (decimal numbers)"
+  - "You can change a variable's value at any time"
+
+examples:
+  - |
+    # Creating a variable
+    name = "Alice"
+    print(name)
+  - |
+    # Numbers don't need quotes
+    age = 25
+    score = 98.5
+    print(age)
+    print(score)
+  - |
+    # Using variables together
+    first_name = "Bob"
+    last_name = "Smith"
+    print(first_name, last_name)
+
 starter_code: |
   # Variables let you store values and reuse them
   # Try creating variables for your name and age

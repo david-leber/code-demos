@@ -1,15 +1,38 @@
 # 🐍 Coding Tutor IDE
 
-An interactive IDE that teaches Python programming with integrated AI assistance. The IDE runs in a VM and executes student code in a separate, isolated VM for security.
+An interactive IDE that teaches Python programming through **AI-powered conversational learning**. The IDE runs in a VM and executes student code in a separate, isolated VM for security.
+
+## ✨ Interactive Teaching with Socratic Method
+
+Unlike traditional tutorials, this IDE provides a **true AI tutor** that:
+
+1. **Teaches conversationally**: The AI explains concepts through dialogue, checking your understanding
+2. **Generates dynamic challenges**: Coding exercises are created based on your progress, not static
+3. **Never gives direct answers**: Uses the Socratic method - asks guiding questions instead
+4. **Provides progressive hints**: When you're stuck, get incremental hints without spoiling the solution
+5. **Adaptive walkthrough**: If you really need help, AI walks you through - then generates a NEW challenge to ensure mastery
+
+### Teaching Flow
+
+```
+Introduction → Teaching Concepts → Coding Challenge → Help (if needed) → Mastery
+                                         ↓                    ↓
+                                    Submit Code         Request Hint
+                                         ↓                    ↓
+                                   AI Evaluation      Socratic Guidance
+                                         ↓
+                                   Need Walkthrough? → New Challenge Required
+```
 
 ## 🎯 Features
 
-- **Interactive Code Editor**: Write Python code in a clean, web-based interface
-- **AI-Powered Code Review**: Get instant feedback on your code from an AI assistant
-- **Structured Lessons**: Progressive learning path with hands-on exercises
+- **Interactive AI Tutor**: Conversational learning with real-time dialogue
+- **Socratic Method**: AI guides through questions, never gives direct answers
+- **Dynamic Challenge Generation**: Exercises tailored to your progress
+- **Adaptive Help System**: Progressive hints → Socratic guidance → Full walkthrough
 - **Safe Code Execution**: Student code runs in isolated Docker containers
-- **Real-time Feedback**: See output immediately and get suggestions for improvement
 - **Dual-VM Architecture**: IDE and code execution are completely isolated
+- **Real-time Feedback**: See output immediately and track your progress
 
 ## 🏗️ Architecture
 
@@ -61,7 +84,14 @@ cargo run --release
 
 ### 3. Open the IDE
 
-Navigate to `http://localhost:3000/static/index.html` in your browser.
+**Interactive Tutor (Recommended)**: `http://localhost:3000/static/tutor.html`
+- Full conversational AI teaching experience
+- Socratic method guidance
+- Dynamic challenge generation
+
+**Classic Mode**: `http://localhost:3000/static/index.html`
+- Traditional lesson format with static exercises
+- Good for quick practice
 
 ## 🔧 Configuration
 

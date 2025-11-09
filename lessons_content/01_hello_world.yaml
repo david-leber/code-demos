@@ -5,6 +5,26 @@ objectives:
   - "Understand how to use the print() function"
   - "Write your first Python program"
   - "Learn about strings in Python"
+
+concepts:
+  - "The print() function displays text to the screen"
+  - "Strings are text enclosed in quotes (single or double)"
+  - "Python executes code line by line from top to bottom"
+  - "Comments start with # and are ignored by Python"
+
+examples:
+  - |
+    # This prints a simple message
+    print("Hello, World!")
+  - |
+    # You can use single or double quotes
+    print('Hello!')
+    print("Hello!")
+  - |
+    # Print multiple lines
+    print("Line 1")
+    print("Line 2")
+
 starter_code: |
   # Welcome to your first Python lesson!
   # Use the print() function to display "Hello, World!"

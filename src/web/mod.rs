@@ -12,13 +12,15 @@ use tower_http::services::ServeDir;
 use crate::ai_assistant::AIAssistant;
 use crate::executor::CodeExecutor;
 use crate::lessons::LessonManager;
-use crate::models::{AIReview, ExecutionResult, Lesson};
+use crate::tutor::InteractiveTutor;
+use crate::models::{AIReview, ExecutionResult, Lesson, TutorRequest, TutorResponse};
 
 #[derive(Clone)]
 pub struct AppState {
     pub lesson_manager: Arc<LessonManager>,
     pub code_executor: Arc<CodeExecutor>,
     pub ai_assistant: Arc<AIAssistant>,
+    pub interactive_tutor: Arc<InteractiveTutor>,
 }
 
 pub fn create_router(state: AppState) -> Router {
@@ -28,6 +30,7 @@ pub fn create_router(state: AppState) -> Router {
         .route("/api/lessons/:id", get(get_lesson))
         .route("/api/execute", post(execute_code))
         .route("/api/review", post(review_code))
+        .route("/api/tutor/interact", post(tutor_interact))
         .nest_service("/static", ServeDir::new("static"))
         .with_state(state)
 }
@@ -140,4 +143,17 @@ async fn review_code(
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     Ok(Json(review))
+}
+
+async fn tutor_interact(
+    State(state): State<AppState>,
+    Json(request): Json<TutorRequest>,
+) -> Result<Json<TutorResponse>, (StatusCode, String)> {
+    let response = state
+        .interactive_tutor
+        .handle_request(request)
+        .await
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    Ok(Json(response))
 }
