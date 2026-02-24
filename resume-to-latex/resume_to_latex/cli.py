@@ -1,7 +1,9 @@
 """Command-line interface for resume-to-latex converter."""
 
-import click
 from pathlib import Path
+
+import click
+
 from .pdf_converter import PDFConverter
 from .word_converter import WordConverter
 
@@ -58,13 +60,10 @@ def main(input_file: str, output: str, type: str):
             file_type = detect_file_type(input_path)
         except ValueError as e:
             click.echo(f"Error: {e}", err=True)
-            raise click.Abort()
+            raise click.Abort() from e
 
     # Determine output path
-    if output:
-        output_path = Path(output)
-    else:
-        output_path = input_path.with_suffix('.tex')
+    output_path = Path(output) if output else input_path.with_suffix('.tex')
 
     # Convert based on file type
     try:
@@ -80,15 +79,15 @@ def main(input_file: str, output: str, type: str):
 
         converter.save_latex(str(output_path))
         click.echo(f"✓ Successfully converted to {output_path}")
-        click.echo(f"\nYou can now edit the LaTeX file and compile it with:")
+        click.echo("\nYou can now edit the LaTeX file and compile it with:")
         click.echo(f"  pdflatex {output_path.name}")
 
     except FileNotFoundError as e:
         click.echo(f"Error: {e}", err=True)
-        raise click.Abort()
+        raise click.Abort() from e
     except Exception as e:
         click.echo(f"Error during conversion: {e}", err=True)
-        raise click.Abort()
+        raise click.Abort() from e
 
 
 if __name__ == '__main__':

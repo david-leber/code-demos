@@ -1,8 +1,9 @@
 """Tests for PDF converter."""
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+
 from resume_to_latex.pdf_converter import PDFConverter
 
 

@@ -1,10 +1,10 @@
 """Create sample resume files for testing."""
 
-from docx import Document
-from docx.shared import Pt, RGBColor
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-import pymupdf as fitz
 from pathlib import Path
+
+from docx import Document
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import Pt
 
 
 def create_sample_word_resume_1():
@@ -24,7 +24,7 @@ def create_sample_word_resume_1():
     doc.add_paragraph()  # Spacing
 
     # Education
-    edu = doc.add_heading("EDUCATION", level=1)
+    doc.add_heading("EDUCATION", level=1)
     doc.add_paragraph("Bachelor of Science in Computer Science")
     doc.add_paragraph("University of California, Berkeley | 2018-2022")
     doc.add_paragraph("GPA: 3.8/4.0")
@@ -32,7 +32,7 @@ def create_sample_word_resume_1():
     doc.add_paragraph()
 
     # Experience
-    exp = doc.add_heading("EXPERIENCE", level=1)
+    doc.add_heading("EXPERIENCE", level=1)
 
     doc.add_paragraph("Software Engineer | Tech Company Inc. | 2022-Present")
     bullets = [
@@ -46,7 +46,7 @@ def create_sample_word_resume_1():
     doc.add_paragraph()
 
     # Skills
-    skills = doc.add_heading("SKILLS", level=1)
+    doc.add_heading("SKILLS", level=1)
     doc.add_paragraph("Programming: Python, JavaScript, Java, C++")
     doc.add_paragraph("Frameworks: React, Django, Flask, Node.js")
     doc.add_paragraph("Tools: Git, Docker, AWS, Linux")
@@ -71,7 +71,7 @@ def create_sample_word_resume_2():
     doc.add_paragraph()
 
     # Professional Summary
-    summary = doc.add_heading("PROFESSIONAL SUMMARY", level=1)
+    doc.add_heading("PROFESSIONAL SUMMARY", level=1)
     doc.add_paragraph(
         "Results-driven Marketing Manager with 5+ years of experience in digital marketing, "
         "brand strategy, and campaign management. Proven track record of increasing brand "
@@ -81,7 +81,7 @@ def create_sample_word_resume_2():
     doc.add_paragraph()
 
     # Work Experience
-    exp = doc.add_heading("WORK EXPERIENCE", level=1)
+    doc.add_heading("WORK EXPERIENCE", level=1)
 
     doc.add_paragraph("Marketing Manager | Digital Solutions Corp | 2020-Present")
     bullets = [
@@ -106,7 +106,7 @@ def create_sample_word_resume_2():
     doc.add_paragraph()
 
     # Education
-    edu = doc.add_heading("EDUCATION", level=1)
+    doc.add_heading("EDUCATION", level=1)
     doc.add_paragraph("MBA in Marketing | Stanford University | 2018")
     doc.add_paragraph("BA in Communications | UCLA | 2016")
 
@@ -130,7 +130,7 @@ def create_sample_word_resume_3():
     doc.add_paragraph()
 
     # Skills
-    skills = doc.add_heading("Technical Skills", level=1)
+    doc.add_heading("Technical Skills", level=1)
     doc.add_paragraph("Languages: Python, R, SQL, Scala")
     doc.add_paragraph("ML/AI: TensorFlow, PyTorch, scikit-learn, Keras")
     doc.add_paragraph("Big Data: Spark, Hadoop, Hive")
@@ -139,7 +139,7 @@ def create_sample_word_resume_3():
     doc.add_paragraph()
 
     # Experience
-    exp = doc.add_heading("Professional Experience", level=1)
+    doc.add_heading("Professional Experience", level=1)
 
     doc.add_paragraph("Senior Data Scientist | AI Research Lab | 2021-Present")
     bullets = [
@@ -154,14 +154,14 @@ def create_sample_word_resume_3():
     doc.add_paragraph()
 
     # Projects
-    projects = doc.add_heading("Notable Projects", level=1)
+    doc.add_heading("Notable Projects", level=1)
     doc.add_paragraph("Predictive Analytics Platform: Built end-to-end ML pipeline processing 10M+ records/day")
     doc.add_paragraph("Customer Segmentation: Developed clustering algorithm reducing marketing costs by $2M")
 
     doc.add_paragraph()
 
     # Education
-    edu = doc.add_heading("Education", level=1)
+    doc.add_heading("Education", level=1)
     doc.add_paragraph("Ph.D. in Computer Science | MIT | 2021")
     doc.add_paragraph("Specialization: Machine Learning & Artificial Intelligence")
     doc.add_paragraph("M.S. in Statistics | Carnegie Mellon University | 2018")

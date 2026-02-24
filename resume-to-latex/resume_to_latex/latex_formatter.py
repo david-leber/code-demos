@@ -1,7 +1,6 @@
 """LaTeX formatting utilities for resume conversion."""
 
 import re
-from typing import List
 
 
 class LaTeXFormatter:
@@ -79,10 +78,10 @@ class LaTeXFormatter:
     def detect_bullet_point(text: str) -> bool:
         """Detect if text is a bullet point."""
         text = text.strip()
-        return text.startswith(('•', '-', '*', '–', '—')) or re.match(r'^\d+\.', text)
+        return text.startswith(('•', '-', '*', '–', '—')) or bool(re.match(r'^\d+\.', text))
 
     @staticmethod
-    def format_list_items(items: List[str]) -> str:
+    def format_list_items(items: list[str]) -> str:
         """Format a list of items in LaTeX."""
         if not items:
             return ""
@@ -138,10 +137,7 @@ class LaTeXFormatter:
             return False
 
         # Should be relatively short
-        if len(text) > 50:
-            return False
-
-        return True
+        return not len(text) > 50
 
     @staticmethod
     def format_name(name: str) -> str:

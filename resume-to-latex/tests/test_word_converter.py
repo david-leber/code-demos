@@ -1,8 +1,9 @@
 """Tests for Word document converter."""
 
+from unittest.mock import MagicMock, patch
+
 import pytest
-from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+
 from resume_to_latex.word_converter import WordConverter
 
 

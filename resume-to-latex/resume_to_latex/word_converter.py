@@ -1,9 +1,9 @@
 """Word document to LaTeX converter."""
 
-from docx import Document
-from docx.text.paragraph import Paragraph
 from pathlib import Path
-from typing import List
+
+from docx import Document
+
 from .latex_formatter import LaTeXFormatter
 
 
@@ -19,9 +19,9 @@ class WordConverter:
         self.formatter = LaTeXFormatter()
         self.doc = None
 
-    def extract_paragraphs(self) -> List[dict]:
+    def extract_paragraphs(self) -> list[dict]:
         """Extract paragraphs from Word document with formatting info."""
-        self.doc = Document(self.docx_path)
+        self.doc = Document(str(self.docx_path))
         paragraphs = []
 
         for para in self.doc.paragraphs:
@@ -30,8 +30,10 @@ class WordConverter:
                 continue
 
             # Get paragraph style and formatting
-            style_name = para.style.name if para.style else "Normal"
-            is_heading = "Heading" in style_name or style_name.startswith("Title")
+            style_name = para.style.name if para.style else None
+            is_heading = bool(
+                style_name and ("Heading" in style_name or style_name.startswith("Title"))
+            )
 
             # Check font size if available
             font_size = None
@@ -56,7 +58,7 @@ class WordConverter:
 
         return paragraphs
 
-    def analyze_structure(self, paragraphs: List[dict]) -> List[dict]:
+    def analyze_structure(self, paragraphs: list[dict]) -> list[dict]:
         """Analyze paragraphs to determine document structure."""
         if not paragraphs:
             return []
@@ -72,9 +74,7 @@ class WordConverter:
                 block_type = "name"
             elif self.formatter.is_likely_contact_info(text):
                 block_type = "contact"
-            elif para["is_heading"] or para["is_bold"] and len(text.split()) <= 3:
-                block_type = "section"
-            elif self.formatter.detect_section_heading(text):
+            elif para["is_heading"] or para["is_bold"] and len(text.split()) <= 3 or self.formatter.detect_section_heading(text):
                 block_type = "section"
             elif self.formatter.detect_bullet_point(text):
                 block_type = "bullet"

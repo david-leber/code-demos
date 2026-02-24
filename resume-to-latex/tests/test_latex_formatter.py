@@ -1,6 +1,5 @@
 """Tests for LaTeX formatter."""
 
-import pytest
 from resume_to_latex.latex_formatter import LaTeXFormatter
 
 

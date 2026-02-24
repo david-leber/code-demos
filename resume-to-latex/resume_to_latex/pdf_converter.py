@@ -1,8 +1,9 @@
 """PDF to LaTeX converter."""
 
-import pymupdf as fitz
 from pathlib import Path
-from typing import List, Tuple
+
+import pymupdf as fitz
+
 from .latex_formatter import LaTeXFormatter
 
 
@@ -18,12 +19,12 @@ class PDFConverter:
         self.formatter = LaTeXFormatter()
         self.doc = None
 
-    def extract_text_blocks(self) -> List[Tuple[str, dict]]:
+    def extract_text_blocks(self) -> list[tuple[str, dict]]:
         """Extract text blocks from PDF with formatting information."""
         self.doc = fitz.open(self.pdf_path)
         blocks = []
 
-        for page_num, page in enumerate(self.doc):
+        for page_num, page in enumerate(self.doc):  # type: ignore[arg-type]
             # Get text blocks with position and formatting info
             text_blocks = page.get_text("dict")["blocks"]
 
@@ -43,7 +44,7 @@ class PDFConverter:
 
         return blocks
 
-    def analyze_structure(self, blocks: List[Tuple[str, dict]]) -> List[dict]:
+    def analyze_structure(self, blocks: list[tuple[str, dict]]) -> list[dict]:
         """Analyze text blocks to determine document structure."""
         if not blocks:
             return []

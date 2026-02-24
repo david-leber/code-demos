@@ -1,7 +1,9 @@
 """Smoke tests using real sample resumes."""
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from resume_to_latex.word_converter import WordConverter
 
 
@@ -157,7 +159,7 @@ class TestSmokeWordConverter:
 
                 # Check for unescaped special chars in content
                 # Note: This is a heuristic check
-                if '{' in line and not '\\{' in line and not line.strip().startswith('\\'):
+                if '{' in line and '\\{' not in line and not line.strip().startswith('\\'):
                     # There might be legitimate braces in LaTeX commands
                     pass
 
@@ -172,7 +174,7 @@ class TestSmokeWordConverter:
 
         start_time = time.time()
         converter = WordConverter(str(input_file))
-        latex = converter.convert_to_latex()
+        converter.convert_to_latex()
         output_file = tmp_path / "perf_test.tex"
         converter.save_latex(str(output_file))
         elapsed = time.time() - start_time

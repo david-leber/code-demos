@@ -1,10 +1,12 @@
 """Tests for CLI interface."""
 
-import pytest
 from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
 from click.testing import CliRunner
-from unittest.mock import patch, MagicMock
-from resume_to_latex.cli import main, detect_file_type
+
+from resume_to_latex.cli import detect_file_type, main
 
 
 class TestFileTypeDetection:
@@ -48,7 +50,7 @@ class TestCLI:
         input_file = tmp_path / "test.pdf"
         input_file.touch()
 
-        output_file = tmp_path / "test.tex"
+        tmp_path / "test.tex"
 
         # Mock the converter
         mock_converter = MagicMock()
@@ -67,7 +69,7 @@ class TestCLI:
         input_file = tmp_path / "test.docx"
         input_file.touch()
 
-        output_file = tmp_path / "test.tex"
+        tmp_path / "test.tex"
 
         # Mock the converter
         mock_converter = MagicMock()
