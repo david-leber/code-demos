@@ -58,3 +58,9 @@ Thumbs.db
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/

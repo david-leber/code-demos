@@ -10,6 +10,12 @@ dependencies = [
     "click>=8.1.7",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+
 [project.scripts]
 resume-to-latex = "resume_to_latex.cli:main"
 
@@ -19,3 +25,10 @@ build-backend = "hatchling.build"
 
 [tool.uv]
 package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"

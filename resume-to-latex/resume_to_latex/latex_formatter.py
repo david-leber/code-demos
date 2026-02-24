@@ -10,6 +10,10 @@ class LaTeXFormatter:
     @staticmethod
     def escape_latex(text: str) -> str:
         """Escape special LaTeX characters in text."""
+        # Use placeholder to avoid double-escaping
+        text = text.replace('\\', '<<<BACKSLASH>>>')
+
+        # Escape other special characters
         replacements = {
             '&': r'\&',
             '%': r'\%',
@@ -18,13 +22,17 @@ class LaTeXFormatter:
             '_': r'\_',
             '{': r'\{',
             '}': r'\}',
-            '~': r'\textasciitilde{}',
-            '^': r'\textasciicircum{}',
-            '\\': r'\textbackslash{}',
+            '~': '<<<TILDE>>>',
+            '^': '<<<CARET>>>',
         }
 
         for char, replacement in replacements.items():
             text = text.replace(char, replacement)
+
+        # Replace placeholders with LaTeX commands
+        text = text.replace('<<<BACKSLASH>>>', r'\textbackslash{}')
+        text = text.replace('<<<TILDE>>>', r'\textasciitilde{}')
+        text = text.replace('<<<CARET>>>', r'\textasciicircum{}')
 
         return text
 
@@ -145,7 +153,8 @@ class LaTeXFormatter:
     def is_likely_contact_info(text: str) -> bool:
         """Detect if text contains contact information."""
         email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        phone_pattern = r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b'
+        # Match patterns like: 123-456-7890, 123.456.7890, (123) 456-7890
+        phone_pattern = r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b'
         url_pattern = r'https?://|www\.'
 
         return bool(
